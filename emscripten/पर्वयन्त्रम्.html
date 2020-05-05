@@ -6,11 +6,31 @@
 </title>
 </head>
 <body>
+पर्वयन्त्रम्।
 <script src="पर्वयन्त्रम्.js"></script>
 <script>
-U = Module.cwrap('उपक्रमः', null, null);
 P = Module.cwrap('नवप्रयोगः', 'number', ['number', 'number']);
 S = Module.cwrap('नवपर्व', 'number', ['number', 'number']);
+M = Module.cwrap('मार्जनम्', null, ['number']);
+var m, v, d, t, s, h, a, p, b;
+function U() {
+	m = Module.cwrap('मूलपर्व', 'number', null)();
+	v = Module.cwrap('वामकपर्व', 'number', null)();
+	d = Module.cwrap('दक्षिणकपर्व', 'number', null)();
+	
+	dm = P(d, m);
+	d2m = P(d, dm);
+	d3m = P(d, d2m);
+	d4m = P(d, d3m);
+	d5m = P(d, d4m);
+	
+	t = P(v, m);
+	s = P(v, dm);
+	h = P(v, d2m);
+	a = P(v, d3m);
+	p = P(v, d4m);
+	b = P(v, d5m);
+}
 </script>
 </body>
 </html>
