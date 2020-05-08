@@ -13,7 +13,7 @@
 ततः `emscripten` नाम­स­ञ्चय­म्प्र­विश्य­तत्र `make` कुर्यात्।
 
 ```
-cd emscripten
+cd p/emscripten
 make
 ```
 
