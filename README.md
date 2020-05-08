@@ -4,7 +4,11 @@
 
 ## उप­योग­विधिः
 ### प्रा­ग­पेक्षित­यन्त्राणि
-[emscripten](emscripten.org)­च­Unicode­स­मर्थकम्­C­सं­साधक­ञ्चा­पे­क्ष्यते। [Clang](https://clang.llvm.org/)­वा­[नव­मोत्तरम्­GCC](https://gcc.gnu.org/gcc-10/)­वैते­Unicode­समर्थके।
+* [emscripten](emscripten.org)­च
+* Unicode­स­मर्थकम्­C­सं­साधक­ञ्चा­पे­क्ष्यते।  
+द्वे­प्र­सिद्धे­अमू­Unicode­स­मर्थके।
+    * [Clang](https://clang.llvm.org/)
+    * [नव­मोत्तरम्­GCC](https://gcc.gnu.org/gcc­10/)
 ### प्रति­ष्ठापनम्
 एतत्­Git­नि­धानं­स्व­कीये­स­ङ्गणके­वा­हरेत्।
 ततः­`emscripten`­नाम­स­ञ्चय­म्प्र­विश्य­तत्र­`make`­कुर्यात्।
