@@ -1,0 +1,1 @@
+find . -not -path '*\/.*' -type f -exec sed -i 's/\b'$1'\b/'$2'/g' {} +
