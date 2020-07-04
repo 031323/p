@@ -28,6 +28,8 @@ typedef struct
 
 typedef smbrnm * smbrnpdm;
 
+static prv suddm(const * prv);
+
 smbrnm nvsmbrnm()
 {
 	smbrnm ynnvm = { 0, 0, 0 };
@@ -57,18 +59,22 @@ prv nvm(smbrnpdm pdm)
 	return prtmriktm;
 }
 
-void recnm(smbrnpdm pdm, prv muktm)
+void recnm(smbrnpdm pdm, prv riktm)
 {
-	pdm->pdm[muktm].dksinm = pdm->prtmriktm;
-	pdm->prtmriktm = muktm;
+	pdm->pdm[riktm].dksinm = pdm->prtmriktm;
+	pdm->prtmriktm = riktm;
 }
 
 int main()
 {
 	smbrnm s = nvsmbrnm();
-	int prvani = 10000000;
+	int prvani = 10000;
 	for(int i = 0; i < prvani; i++) {
-		nvm(&s);
+		prv p = nvm(&s);
+		s.pdm[p].dksinm = i * 10;
+	}
+	for(int i = 0; i < 10; i++) {
+		printf("%d\n", s.pdm[i].dksinm);
 	}
 	printf("%f\n", log2((float)prvani));
 	return 0;
