@@ -7,11 +7,11 @@
 
 #include <math.h>
 
-typedef enum { PRAKRTM, YOGH, DISTRUPM } yugdrma;
+typedef enum { PRAKRTM, YOGH, DISTRUPM } yugdrm;
 
 typedef struct
 {
-	yugdrma drma;
+	yugdrm drm;
 	yugsnkya snkya;
 	yugm svym;
 	yugm dksinm;
