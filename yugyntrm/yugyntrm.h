@@ -1,6 +1,10 @@
 #ifndef YUGYNTRM_H
 #define YUGYNTRM_H
 
+typedef char dvym;
+#define st 1
+#define ast 0
+
 #ifndef yugsnkya
 #define yugsnkya unsigned int
 #endif
@@ -28,13 +32,20 @@ typedef struct
 	yugruppdm pdm;
 	yugsnkya vrima;
 	yugm prtmriktm;
+	yugm murda;
 } smbrnm;
 
 typedef smbrnm * smbrnpdm;
 typedef yugm * yugpdm;
 
 smbrnm nvsmbrnm();
-yugm nvm(const smbrnpdm);
-yugm sndanm(const smbrnpdm, const yugdrm, yugm, const yugm, const yugm);
+yugm nvm(const smbrnpdm, const yugm, const yugm, const yugm, const dvym, const dvym);
+void visrgh(const smbrnpdm);
+yugm svym(const smbrnpdm, const yugm);
+yugm dksinm(const smbrnpdm, const yugm);
+
+#ifdef PRIKSNM
+void lekh(const smbrnpdm);
+#endif
 
 #endif

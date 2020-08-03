@@ -1,9 +1,12 @@
 #include "yugyntrm.h"
 
+#include <stdio.h>
+
 int main()
 {
 	smbrnm s = nvsmbrnm();
-	for(int i = 0; i < 4096; i++)
-		sndanm(&s, 0, PRAKRTM, 0, 0);
+	yugm m = nvm(&s, 0, 1, 2, 0, 1);
+	lekh(&s);
+	visrgh(&s);
 	return 0;
 }

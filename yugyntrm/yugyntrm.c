@@ -7,10 +7,6 @@
 
 #include <math.h>
 
-typedef char dvym;
-#define st 1
-#define ast 0
-
 #define DISTRUPKM 1
 #define SVYKM 2
 #define DKSINKM 3
@@ -24,10 +20,8 @@ typedef char dvym;
 
 static yugm suddm(const smbrnpdm, const yugpdm, const yugm);
 
-int vrdnani = 0;
-
 /* = malloc */
-yugm nvm(const smbrnpdm pdm)
+static yugm nvyugm(const smbrnpdm pdm)
 {
 	const yugm prtmriktm = pdm->prtmriktm;
 	if(prtmriktm == pdm->vrima) {
@@ -41,8 +35,11 @@ yugm nvm(const smbrnpdm pdm)
 		}
 		pdm->pdm = nvpdm;
 		pdm->vrima = vrima;
-		vrdnani++;
-		printf("%d vrdnani\n", vrdnani);
+
+#ifdef PRIKSNM
+		printf("%d vrima\n", vrima);
+#endif
+
 	}
 	pdm->prtmriktm = RUPM(pdm, prtmriktm).dksinm;
 	return prtmriktm;
@@ -58,7 +55,7 @@ static void atmksyh(const smbrnpdm, const yugm);
 
 static void visvangksyh(const smbrnpdm pdm, const yugm kspyitvym)
 {
-	if(kspyitvym) {
+	if(kspyitvym > 8) {
 		atmksyh(pdm, RUPM(pdm, kspyitvym).svym);
 		atmksyh(pdm, RUPM(pdm, kspyitvym).dksinm);
 	}
@@ -66,7 +63,7 @@ static void visvangksyh(const smbrnpdm pdm, const yugm kspyitvym)
 
 static void atmksyh(const smbrnpdm pdm, const yugm kspyitvym)
 {
-	if(kspyitvym && !--(RUPM(pdm, kspyitvym).snkya)) {
+	if(kspyitvym > 8 && !--(RUPM(pdm, kspyitvym).snkya)) {
 		visvangksyh(pdm, kspyitvym);
 		recnm(pdm, kspyitvym);
 	}
@@ -74,16 +71,16 @@ static void atmksyh(const smbrnpdm pdm, const yugm kspyitvym)
 
 static void vrdnm(const smbrnpdm pdm, const yugm vrditvym)
 {
-	if(vrditvym)
+	if(vrditvym > 8)
 		RUPM(pdm, vrditvym).snkya++;
 }
 
-yugm sndanm(const smbrnpdm pdm, yugm nivesnm,
+static yugm sndanm(const smbrnpdm pdm, yugm nivesnm,
 	const yugdrm drm, const yugm svym, const yugm dksinm)
 {
-	if(nivesnm)
+	if(nivesnm > 8)
 		visvangksyh(pdm, nivesnm);
-	else nivesnm = nvm(pdm);
+	else nivesnm = nvyugm(pdm);
 	RUPM(pdm, nivesnm).drm = drm;
 	vrdnm(pdm, svym);
 	vrdnm(pdm, dksinm);
@@ -96,10 +93,91 @@ smbrnm nvsmbrnm()
 {
 	smbrnm nvmsmbrnm = { 0, 0, 0 };
 	const smbrnpdm nvpdm = &nvmsmbrnm;
-	for(int i = 0; i <= 8; i++) {
+	for(yugsnkya i = 0; i <= 8; i++) {
 		sndanm(nvpdm, 0, PRAKRTM, 0, 0);
 	}
+	nvmsmbrnm.murda = 0;
 	return nvmsmbrnm;
+}
+
+yugm nvm(const smbrnpdm pdm, const yugm prtmm, const yugm dvitiym, const yugm trtiym, dvym yogtvm, dvym svytvm)
+{
+	yugdrm cturtdrm = PRAKRTM;
+	if(yogtvm)
+		cturtdrm = YOGH;
+	const yugm cturtm = sndanm(pdm, 0, cturtdrm, dvitiym, trtiym);
+	yugm nvmurda;
+	if(svytvm)
+		nvmurda = sndanm(pdm, 0, PRAKRTM, cturtm, prtmm);
+	else nvmurda = sndanm(pdm, 0, PRAKRTM, prtmm, cturtm);
+	RUPM(pdm, nvmurda).snkya = 1;
+	atmksyh(pdm, pdm->murda);
+	pdm->murda = nvmurda;
+	return nvmurda;
+}
+
+yugm svym(const smbrnpdm pdm, const yugm ekm)
+{
+	return suddm(pdm, &RUPM(pdm, ekm).svym, 0);
+}
+
+yugm dksinm(const smbrnpdm pdm, const yugm ekm)
+{
+	return suddm(pdm, &RUPM(pdm, ekm).dksinm, 0);
+}
+
+#ifdef PRIKSNM
+static void srtlekh(const smbrnpdm pdm, const yugm murda, char * srnm)
+{
+	char * svysrnm = malloc(strlen(srnm) + strlen("|") - 1);
+	char * dksinsrnm = malloc(strlen(srnm) + 1);
+	char * stmbh = "│";
+	int i;
+	for(i = 0; i < strlen(srnm); i++) {
+		svysrnm[i] = srnm[i];
+		dksinsrnm[i] = srnm[i];
+	}
+	dksinsrnm[i] = ' ';
+	dksinsrnm[i + 1] = 0;
+	for(int j = 0; i < strlen(stmbh); j++, i++) {
+		svysrnm[i] = stmbh[j];
+	}
+	svysrnm[i + 1] = 0;
+	printf("%d\n", murda);
+	if(murda > 8) {
+		printf("%s├", srnm);
+		srtlekh(pdm, svym(pdm, murda), svysrnm);
+		printf("%s└", srnm);
+		srtlekh(pdm, dksinm(pdm, murda), dksinsrnm);
+	}
+	free(svysrnm);
+	free(dksinsrnm);
+}
+
+void lekh(const smbrnpdm pdm)
+{
+	char * srnani = "";
+	srtlekh(pdm, pdm->murda, srnani);
+}
+#endif
+
+void visrgh(const smbrnpdm pdm)
+{
+#ifdef PRIKSNM
+	for(yugsnkya i = 0; i <= 8; i++) {
+		printf("%d ", RUPM(pdm, i).snkya);
+	}
+	atmksyh(pdm, pdm->murda);
+	yugm riktm = pdm->prtmriktm;
+	yugsnkya i = 0;
+	while(riktm != pdm->vrima) {
+		i++;
+		riktm = RUPM(pdm, riktm).dksinm;
+	}
+	printf("\n%d\n", pdm->vrima - i - 9);
+#else
+	free(pdm->pdm);
+#endif
 }
 
 static void distrupm(const smbrnpdm pdm, const yugm desym, const yugm distm)
@@ -140,6 +218,7 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 				const yugm svysvym = suddm(pdm, &RUPM(pdm, svym).svym, 0);
 				if(svysvym == SMTVKM) {
 					yugm nvyogh = sndanm(pdm, 0, YOGH, RUPM(pdm, svym).dksinm, RUPM(pdm, yogh).dksinm);
+					RUPM(pdm, nvyogh).snkya = 1;
 					vrdnm(pdm, nvyogh);
 					if (!suddm(pdm, &nvyogh, atidesh))
 						distrupm(pdm, sodym, 0);
