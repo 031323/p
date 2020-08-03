@@ -1,0 +1,1 @@
+add_library(yugyntrm yugyntrm.c yugyntrm.h)
