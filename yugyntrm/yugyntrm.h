@@ -15,6 +15,15 @@ typedef char dvym;
 
 typedef yugsnkya yugm;
 
+#define DISTRUPKM 1
+#define SVYKM 2
+#define DKSINKM 3
+#define ATIDESYKM 4
+#define SMTVKM 5
+#define ATIDESKM 6
+#define YOGKM 7
+#define ANYKM 8
+
 typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH } yugdrm;
 
 typedef struct
@@ -39,7 +48,8 @@ typedef smbrnm * smbrnpdm;
 typedef yugm * yugpdm;
 
 smbrnm nvsmbrnm();
-yugm nvm(const smbrnpdm, const yugm, const yugm, const yugm, const dvym, const dvym);
+yugm nvm(const smbrnpdm, const yugm, const yugm, const dvym);
+void murdgrhnm(const smbrnpdm, const yugm);
 void visrgh(const smbrnpdm);
 yugm svym(const smbrnpdm, const yugm);
 yugm dksinm(const smbrnpdm, const yugm);
