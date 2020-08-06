@@ -6,10 +6,20 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 #define RUPM(smbrnpdm, yugm) (smbrnpdm->pdm[yugm])
 
+#define UTTRRIKTM(smbrnpdm, riktm) (RUPM(smbrnpdm, riktm).dksinm)
+
 static yugm suddm(const smbrnpdm, const yugpdm, const yugm);
+
+static void riktopkrmh(const smbrnpdm pdm, const yugm purvym, const yugm prmm)
+{
+	for(yugsnkya snkya = purvym; snkya < prmm; snkya++) {
+		UTTRRIKTM(pdm, snkya) = snkya + 1;
+	}
+}
 
 /* = malloc */
 static yugm nvyugm(const smbrnpdm pdm)
@@ -18,13 +28,11 @@ static yugm nvyugm(const smbrnpdm pdm)
 	if(prtmriktm == pdm->vrima) {
 		const yugsnkya vrima = prtmriktm ? prtmriktm * VRDNM : 1;
 		const yugruppdm nvpdm = malloc(vrima * sizeof(yugrupm));
-		for(yugm ekm = 0; ekm < prtmriktm; ekm++) {
-			nvpdm[ekm] = RUPM(pdm, ekm);
-		}
-		for(yugm ekm = prtmriktm; ekm < vrima; ekm ++) {
-			nvpdm[ekm].dksinm = ekm + 1;
+		for(yugsnkya snkya = 0; snkya < prtmriktm; snkya++) {
+			nvpdm[snkya] = RUPM(pdm, snkya);
 		}
 		pdm->pdm = nvpdm;
+		riktopkrmh(pdm, prtmriktm, vrima);
 		pdm->vrima = vrima;
 
 #ifdef PRIKSNM
@@ -32,13 +40,15 @@ static yugm nvyugm(const smbrnpdm pdm)
 #endif
 
 	}
-	pdm->prtmriktm = RUPM(pdm, prtmriktm).dksinm;
+	pdm->prtmriktm = UTTRRIKTM(pdm, prtmriktm);
 	return prtmriktm;
 }
+
 /* = free */
 static void recnm(const smbrnpdm pdm, const yugm riktm)
 {
-	RUPM(pdm, riktm).dksinm = pdm->prtmriktm;
+	UTTRRIKTM(pdm, riktm) = pdm->prtmriktm;
+	RUPM(pdm, riktm).drm = RIKTM;
 	pdm->prtmriktm = riktm;
 }
 
@@ -179,9 +189,75 @@ void visrgh(const smbrnpdm pdm)
 		riktm = RUPM(pdm, riktm).dksinm;
 	}
 	printf("\n%d\n", pdm->vrima - i - 9);
-#else
-	free(pdm->pdm);
 #endif
+	free(pdm->pdm);
+}
+
+static char snkyakrmh()
+{
+	uint16_t snkya = 1;
+	return *(char *)(&snkya);
+}
+
+static void yugsnkyaprivrtnm(const yugpdm pdm, char * anym, const dvym gtih)
+{
+	for(int i = 0; i < sizeof(yugsnkya); i++, anym++) {
+		int j = snkyakrmh() ? i : sizeof(yugsnkya) - i;
+		if(gtih)
+			*anym = *(((char *) pdm) + j);
+		else
+			*(((char *) pdm) + j) = *anym;
+	}	
+}
+
+static void yugsnkyagopnm(yugsnkya snkya, void(*gopah)(char, void *), void * anvyh)
+{
+	char yugsnkyapdm[sizeof(yugsnkya)];
+	yugsnkyaprivrtnm(&snkya, yugsnkyapdm, 1);
+	for(int i = 0; i < sizeof(yugsnkya); i++) {
+		gopah(yugsnkyapdm[i], anvyh);
+	}
+}
+
+static yugsnkya yugsnkyaropnm(char(*ropkm)(void *), void * anvyh)
+{
+	yugsnkya snkya;
+	char yugsnkyapdm[sizeof(yugsnkya)];
+	for(int i = 0; i < sizeof(yugsnkya); i++) {
+		yugsnkyapdm[i] = ropkm(anvyh);
+	}
+	yugsnkyaprivrtnm(&snkya, yugsnkyapdm, 0);
+	return snkya;
+}
+
+void gopnm(const smbrnpdm pdm, void(*gopah)(char, void *), void * anvyh)
+{
+	yugsnkyagopnm(pdm->vrima, gopah, anvyh);
+	yugsnkyagopnm(pdm->prtmriktm, gopah, anvyh);
+	yugsnkyagopnm(pdm->murda, gopah, anvyh);
+	for(yugsnkya snkya = 0; snkya < pdm->vrima; snkya++) {
+		gopah((char) RUPM(pdm, snkya).drm, anvyh);
+		yugsnkyagopnm(RUPM(pdm, snkya).snkya, gopah, anvyh);
+		yugsnkyagopnm(RUPM(pdm, snkya).svym, gopah, anvyh);
+		yugsnkyagopnm(RUPM(pdm, snkya).dksinm, gopah, anvyh);
+	}
+}
+
+smbrnm ropnm(char(*ropkm)(void *), void * anvyh)
+{
+	smbrnm ropitm;
+	ropitm.vrima = yugsnkyaropnm(ropkm, anvyh);
+	ropitm.prtmriktm = yugsnkyaropnm(ropkm, anvyh);
+	ropitm.murda = yugsnkyaropnm(ropkm, anvyh);
+	ropitm.pdm = malloc(ropitm.vrima * sizeof(yugrupm));
+	const smbrnpdm ropitpdm = &ropitm;
+	for(yugsnkya snkya = 0; snkya < ropitm.vrima; snkya++) {
+		RUPM(ropitpdm, snkya).drm = (yugdrm) ropkm(anvyh);
+		RUPM(ropitpdm, snkya).snkya = yugsnkyaropnm(ropkm, anvyh);
+		RUPM(ropitpdm, snkya).svym = yugsnkyaropnm(ropkm, anvyh);
+		RUPM(ropitpdm, snkya).dksinm = yugsnkyaropnm(ropkm, anvyh);
+	}
+	return ropitm;
 }
 
 static void distrupm(const smbrnpdm pdm, const yugm desym, const yugm distm)

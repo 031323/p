@@ -5,6 +5,16 @@
 #define Y(a, b) (nvm(&s, a, b, 0))
 #define M(a) murdgrhnm(&s, a)
 
+void gopah(char gopym, void * pdm)
+{
+	putc(gopym, (FILE *) pdm);
+}
+
+char ropkm(void * pdm)
+{
+	return getc((FILE *) pdm);
+}
+
 int main()
 {
 	smbrnm s = nvsmbrnm();
@@ -21,6 +31,14 @@ int main()
 	yugm n = nvm(&s, f, p, 1);
 	M(n);
 	lekh(&s);
+	lekh(&s);
+	FILE * outf = fopen("yugtntrm", "w+");
+	gopnm(&s, &gopah, (void *) outf);
+	fclose(outf);
 	visrgh(&s);
+	FILE * inf = fopen("yugtntrm", "r");
+	s = ropnm(&ropkm, (void *) inf);
+	lekh(&s);
+	lekh(&s);
 	return 0;
 }

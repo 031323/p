@@ -1,12 +1,16 @@
+/* github.com/031323/yugyntrm */
+
+#include <stdint.h>
+
 #ifndef YUGYNTRM_H
 #define YUGYNTRM_H
 
 typedef char dvym;
-#define st 1
-#define ast 0
+#define ST 1
+#define AST 0
 
 #ifndef yugsnkya
-#define yugsnkya unsigned int
+#define yugsnkya uint32_t
 #endif
 
 #ifndef VRDNM
@@ -24,7 +28,7 @@ typedef yugsnkya yugm;
 #define YOGKM 7
 #define ANYKM 8
 
-typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH } yugdrm;
+typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH, RIKTM } yugdrm;
 
 typedef struct
 {
@@ -53,6 +57,9 @@ void murdgrhnm(const smbrnpdm, const yugm);
 void visrgh(const smbrnpdm);
 yugm svym(const smbrnpdm, const yugm);
 yugm dksinm(const smbrnpdm, const yugm);
+
+void gopnm(const smbrnpdm pdm, void(*gopah)(char, void *), void *);
+smbrnm ropnm(char(*ropkm)(void *), void *);
 
 #ifdef PRIKSNM
 void lekh(const smbrnpdm);
