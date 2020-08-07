@@ -1,5 +1,7 @@
 #include "yugyntrm.h"
 
+#include "dvyastktntrm.h"
+
 #include <stdio.h>
 
 #define Y(a, b) (nvm(&s, a, b, 0))
@@ -15,7 +17,7 @@ char ropkm(void * pdm)
 	return getc((FILE *) pdm);
 }
 
-int main()
+void prtmpriksnm()
 {
 	smbrnm s = nvsmbrnm();
 	yugm a = Y(0, 0);
@@ -40,5 +42,20 @@ int main()
 	s = ropnm(&ropkm, (void *) inf);
 	lekh(&s);
 	lekh(&s);
+	visrgh(&s);
+}
+
+void dvyastktntrpriksnm()
+{
+	smbrnm s = dvyastktntrm();
+	char * a = "abcd";
+	yugm y = dvyastktnteryugtntih(&s, a, 4);
+	int i;
+	printf("%s\n", yugtnterdvyastktntih(&s, y, &i));
+}
+
+int main()
+{
+	dvyastktntrpriksnm();
 	return 0;
 }

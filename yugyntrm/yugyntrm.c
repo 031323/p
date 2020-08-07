@@ -132,9 +132,9 @@ yugm dksinm(const smbrnpdm pdm, const yugm ekm)
 #ifdef PRIKSNM
 static void srtlekh(const smbrnpdm pdm, const yugm murda, char * srnm)
 {
-	char * svysrnm = malloc(strlen(srnm) + strlen("|") + 1);
-	char * dksinsrnm = malloc(strlen(srnm) + 1);
 	char * stmbh = "│";
+	char * svysrnm = malloc(strlen(srnm) + strlen(stmbh) + 1);
+	char * dksinsrnm = malloc(strlen(srnm) + 2);
 	int i;
 	for(i = 0; i < strlen(srnm); i++) {
 		svysrnm[i] = srnm[i];
