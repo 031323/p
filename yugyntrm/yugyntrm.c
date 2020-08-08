@@ -147,14 +147,14 @@ static void srtlekh(const smbrnpdm pdm, const yugm murda, char * srnm)
 	}
 	svysrnm[i] = 0;
 	switch(murda) {
-		case 1: printf("DISTRUPKM"); break;
-		case 2: printf("SVYKM"); break;
-		case 3: printf("DKSINKM"); break;
-		case 4: printf("ATIDESYKM"); break;
-		case 5: printf("SMTVKM"); break;
-		case 6: printf("ATIDESKM"); break;
-		case 7: printf("YOGKM"); break;
-		case 8: printf("ANYKM"); break;
+		case 1: printf("SVH"); break;
+		case 2: printf("SVYH"); break;
+		case 3: printf("DKSINH"); break;
+		case 4: printf("STANI"); break;
+		case 5: printf("VICETAH"); break;
+		case 6: printf("ADESH"); break;
+		case 7: printf("YNTA"); break;
+		case 8: printf("DRUVH"); break;
 		default: printf("%d", murda);
 	}
 	printf(": %d\n", RUPM(pdm, murda).snkya);
@@ -280,25 +280,25 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 			const yugm svym = suddm(pdm, &RUPM(pdm, yogh).svym, 0);
 			if (!svym)
 				distrupm(pdm, sodym, 0);
-			else if (svym == DISTRUPKM)
+			else if (svym == SVH)
 				distrupm(pdm, sodym, RUPM(pdm, yogh).dksinm);
-			else if (svym == SVYKM) {
+			else if (svym == SVYH) {
 				const yugm dksinm = suddm(pdm, &RUPM(pdm, yogh).dksinm, 0);
 				if (!dksinm)
 					distrupm(pdm, sodym, 0);
 				else distrupm(pdm, sodym, RUPM(pdm, dksinm).svym);
 			}
-			else if (svym == DKSINKM) {
+			else if (svym == DKSINH) {
 				const yugm dksinm = suddm(pdm, &RUPM(pdm, yogh).dksinm, 0);
 				if (!dksinm)
 					distrupm(pdm, sodym, 0);
 				else distrupm(pdm, sodym, RUPM(pdm, dksinm).dksinm);	
 			}
-			else if (svym == ATIDESYKM)
+			else if (svym == STANI)
 				sndanm(pdm, yogh, YOGH, atidesh, RUPM(pdm, yogh).dksinm);
 			else {
 				const yugm svysvym = suddm(pdm, &RUPM(pdm, svym).svym, 0);
-				if(svysvym == SMTVKM) {
+				if(svysvym == VICETAH) {
 					yugm nvyogh = sndanm(pdm, 0, YOGH, RUPM(pdm, svym).dksinm, RUPM(pdm, yogh).dksinm);
 					vrdnm(pdm, nvyogh);
 					if (!suddm(pdm, &nvyogh, atidesh))
@@ -320,7 +320,7 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 						}
 					}
 					atmksyh(pdm, nvyogh);
-				} else if (svysvym == ATIDESKM) {
+				} else if (svysvym == ADESH) {
 					const yugm svydksinm = RUPM(pdm, svym).dksinm;
 					if(yogh != sodym) {
 						sndanm(pdm, sodym, ATIDESH, svydksinm, yogh);
@@ -330,7 +330,7 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 						const yugm nvyogh = sndanm(pdm, 0, YOGH, svydksinm, RUPM(pdm, yogh).dksinm);
 						sndanm(pdm, sodym, ATIDESH, svydksinm, nvyogh);
 					}
-				} else if (svysvym == YOGKM) {
+				} else if (svysvym == YNTA) {
 					const yugm svydksinm = suddm(pdm, &RUPM(pdm, svym).dksinm, 0);
 					if (!svydksinm)
 						distrupm(pdm, sodym, 0);
@@ -344,7 +344,7 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 						}
 						sndanm(pdm, yogh, YOGH, svyyogh, dksinyogh);
 					}
-				} else if (svysvym == ANYKM){
+				} else if (svysvym == DRUVH){
 					distrupm(pdm, sodym, RUPM(pdm, svym).dksinm);
 				}
 				else {

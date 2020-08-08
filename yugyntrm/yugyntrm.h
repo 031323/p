@@ -19,14 +19,14 @@ typedef char dvym;
 
 typedef yugsnkya yugm;
 
-#define DISTRUPKM 1
-#define SVYKM 2
-#define DKSINKM 3
-#define ATIDESYKM 4
-#define SMTVKM 5
-#define ATIDESKM 6
-#define YOGKM 7
-#define ANYKM 8
+#define SVH 1 // स्वः
+#define SVYH 2 // स॒व्यः
+#define DKSINH 3 // दक्षि॑णः
+#define STANI 4 // स्था॒नी
+#define VICETAH 5 // विचे॑ताः
+#define ADESH 6 // आ॒दे॒शः
+#define YNTA 7 //
+#define DRUVH 8 // ध्रु॒वः
 
 typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH, RIKTM } yugdrm;
 
