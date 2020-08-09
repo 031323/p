@@ -151,7 +151,7 @@ static void srtlekh(const smbrnpdm pdm, const yugm murda, char * srnm)
 		case 2: printf("SVYH"); break;
 		case 3: printf("DKSINH"); break;
 		case 4: printf("STANI"); break;
-		case 5: printf("VICETAH"); break;
+		case 5: printf("VIVICIH"); break;
 		case 6: printf("ADESH"); break;
 		case 7: printf("YNTA"); break;
 		case 8: printf("DRUVH"); break;
@@ -298,7 +298,7 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 				sndanm(pdm, yogh, YOGH, atidesh, RUPM(pdm, yogh).dksinm);
 			else {
 				const yugm svysvym = suddm(pdm, &RUPM(pdm, svym).svym, 0);
-				if(svysvym == VICETAH) {
+				if(svysvym == VIVICIH) {
 					yugm nvyogh = sndanm(pdm, 0, YOGH, RUPM(pdm, svym).dksinm, RUPM(pdm, yogh).dksinm);
 					vrdnm(pdm, nvyogh);
 					if (!suddm(pdm, &nvyogh, atidesh))

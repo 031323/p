@@ -27,8 +27,8 @@ void prtmpriksnm()
 	yugm d = Y(0, 0);
 	lekh(&s);
 	yugm p = Y(a, Y(b, Y(a, Y(a, 0))));
-	yugm r = Y(VICETAH, Y(Y(Y(DRUVH, a), SVH), Y(Y(DRUVH, c), Y(DRUVH, d))));
-	yugm f = Y(ADESH, Y(VICETAH, Y(Y(Y(DRUVH, 0), SVH), Y(Y(DRUVH, 0), Y(Y(YNTA, Y(Y(DRUVH, r), SVYH)), Y(YNTA, Y(Y(DRUVH, STANI), DKSINH)))))));
+	yugm r = Y(VIVICIH, Y(Y(Y(DRUVH, a), SVH), Y(Y(DRUVH, c), Y(DRUVH, d))));
+	yugm f = Y(ADESH, Y(VIVICIH, Y(Y(Y(DRUVH, 0), SVH), Y(Y(DRUVH, 0), Y(Y(YNTA, Y(Y(DRUVH, r), SVYH)), Y(YNTA, Y(Y(DRUVH, STANI), DKSINH)))))));
 	
 	yugm n = nvm(&s, f, p, 1);
 	M(n);
