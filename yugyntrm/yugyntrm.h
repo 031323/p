@@ -1,10 +1,6 @@
 /* github.com/031323/yugyntrm */
 
-#ifdef __STDC_NO_ATOMICS__
 #include <stdint.h>
-#else
-#include <stdatomic.h>
-#endif
 
 #ifndef YUGYNTRM_H
 #define YUGYNTRM_H
@@ -14,13 +10,7 @@ typedef char dvym;
 #define AST 0
 
 #ifndef yugsnkya
-
-#ifdef __STDC_NO_ATOMICS__
 #define yugsnkya uint32_t
-#else
-#define yugsnkya atomic_uint_least32_t
-#endif
-
 #endif
 
 #ifndef VRDNM
@@ -38,7 +28,7 @@ typedef yugsnkya yugm;
 #define YNTA 7 // य॒न्ता
 #define VIVICIH 8 // विवि॑चिः
 
-typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH, RIKTM } yugdrm;
+typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH } yugdrm;
 
 typedef struct
 {
@@ -54,6 +44,7 @@ typedef struct
 {
 	yugruppdm pdm;
 	yugsnkya vrima;
+	yugsnkya bktsnkya;
 	yugm prtmriktm;
 	yugm murda;
 } smbrnm;

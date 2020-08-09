@@ -8,6 +8,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#include <omp.h>
+
 #define RUPM(smbrnpdm, yugm) (smbrnpdm->pdm[yugm])
 
 #define UTTRRIKTM(smbrnpdm, riktm) (RUPM(smbrnpdm, riktm).dksinm)
@@ -24,32 +26,45 @@ static void riktopkrmh(const smbrnpdm pdm, const yugm purvym, const yugm prmm)
 /* = malloc */
 static yugm nvyugm(const smbrnpdm pdm)
 {
-	const yugm prtmriktm = pdm->prtmriktm;
-	if(prtmriktm == pdm->vrima) {
-		const yugsnkya vrima = prtmriktm ? prtmriktm * VRDNM : 1;
-		const yugruppdm nvpdm = malloc(vrima * sizeof(yugrupm));
-		for(yugsnkya snkya = 0; snkya < prtmriktm; snkya++) {
-			nvpdm[snkya] = RUPM(pdm, snkya);
-		}
-		pdm->pdm = nvpdm;
-		riktopkrmh(pdm, prtmriktm, vrima);
-		pdm->vrima = vrima;
+	yugsnkya bktsnkya;
+	#pragma omp atomic capture
+		bktsnkya = ++(pdm->bktsnkya);
+	while(bktsnkya > pdm->vrima) {
+		#pragma omp critical
+		{
+			const yugsnkya vrima = pdm->vrima ? pdm->vrima * VRDNM : 1;
+			const yugruppdm nvpdm = malloc(vrima * sizeof(yugrupm));
+			for(yugsnkya snkya = 0; snkya < pdm->vrima; snkya++) {
+				nvpdm[snkya] = RUPM(pdm, snkya);
+			}
+			pdm->pdm = nvpdm;
+			riktopkrmh(pdm, pdm->vrima, vrima);
+			pdm->vrima = vrima;
 
 #ifdef PRIKSNM
-		printf("%d vrima\n", vrima);
+			printf("%d vrima\n", vrima);
 #endif
-
+		}
 	}
-	pdm->prtmriktm = UTTRRIKTM(pdm, prtmriktm);
+	yugm prtmriktm;
+	#pragma omp atomic capture
+	{
+		prtmriktm = pdm->prtmriktm;
+		pdm->prtmriktm = UTTRRIKTM(pdm, pdm->prtmriktm);
+	}
 	return prtmriktm;
 }
 
 /* = free */
 static void recnm(const smbrnpdm pdm, const yugm riktm)
 {
-	UTTRRIKTM(pdm, riktm) = pdm->prtmriktm;
-	RUPM(pdm, riktm).drm = RIKTM;
-	pdm->prtmriktm = riktm;
+	#pragma omp atomic capture
+	{
+		UTTRRIKTM(pdm, riktm) = pdm->prtmriktm;
+		pdm->prtmriktm = riktm;
+	}
+	#pragma omp atomic
+		pdm->bktsnkya--;
 }
 
 static void atmksyh(const smbrnpdm, const yugm);
@@ -64,16 +79,23 @@ static void visvangksyh(const smbrnpdm pdm, const yugm kspyitvym)
 
 static void atmksyh(const smbrnpdm pdm, const yugm kspyitvym)
 {
-	if(kspyitvym > 8 && !--(RUPM(pdm, kspyitvym).snkya)) {
-		visvangksyh(pdm, kspyitvym);
-		recnm(pdm, kspyitvym);
+	if(kspyitvym > 8) {
+		yugsnkya ksinsnkya;
+		#pragma omp atomic capture
+			ksinsnkya = --(RUPM(pdm, kspyitvym).snkya);
+		if(!ksinsnkya) {
+			visvangksyh(pdm, kspyitvym);
+			recnm(pdm, kspyitvym);
+		}
 	}
 }
 
 static void vrdnm(const smbrnpdm pdm, const yugm vrditvym)
 {
-	if(vrditvym > 8)
-		RUPM(pdm, vrditvym).snkya++;
+	if(vrditvym > 8) {
+		#pragma omp atomic
+			RUPM(pdm, vrditvym).snkya++;
+	}
 }
 
 static yugm sndanm(const smbrnpdm pdm, yugm nivesnm,
@@ -92,12 +114,11 @@ static yugm sndanm(const smbrnpdm pdm, yugm nivesnm,
 
 smbrnm nvsmbrnm()
 {
-	smbrnm nvmsmbrnm = { 0, 0, 0 };
+	smbrnm nvmsmbrnm = { 0, 0, 0, 0, 0 };
 	const smbrnpdm nvpdm = &nvmsmbrnm;
 	for(yugsnkya i = 0; i <= 8; i++) {
 		sndanm(nvpdm, 0, PRAKRTM, 0, 0);
 	}
-	nvmsmbrnm.murda = 0;
 	return nvmsmbrnm;
 }
 
@@ -360,18 +381,17 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 			}
 			
 		} else if (drm == DISTRUPM) {
-			yugm distm = RUPM(pdm, sodym).svym;
-#ifdef __STDC_NO_ATOMICS__
-			*sodypdm = distm;
-			vrdnm(pdm, distm);
-			atmksyh(pdm, sodym);
-#else
-			atomic_exchange(sodypdm, distm);
-			if(*sodypdm != distm) {
-				vrdnm(pdm, *sodypdm);
-				atmksyh(pdm, distm);
+			const yugm distm = RUPM(pdm, sodym).svym;
+			yugm purvsodym;
+			#pragma omp atomic capture
+			{
+				purvsodym = *sodypdm;
+				*sodypdm = distm;
 			}
-#endif
+			if(purvsodym != distm) {
+				vrdnm(pdm, *sodypdm);
+				atmksyh(pdm, purvsodym);
+			}
 		}
 	}
 	return sodym;
