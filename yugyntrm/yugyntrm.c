@@ -360,10 +360,18 @@ static yugm suddm(const smbrnpdm pdm, const yugpdm sodypdm, yugm atidesh)
 			}
 			
 		} else if (drm == DISTRUPM) {
-			const yugm distm = RUPM(pdm, sodym).svym;
+			yugm distm = RUPM(pdm, sodym).svym;
+#ifdef __STDC_NO_ATOMICS__
+			*sodypdm = distm;
 			vrdnm(pdm, distm);
 			atmksyh(pdm, sodym);
-			*sodypdm = distm;
+#else
+			atomic_exchange(sodypdm, distm);
+			if(*sodypdm != distm) {
+				vrdnm(pdm, *sodypdm);
+				atmksyh(pdm, distm);
+			}
+#endif
 		}
 	}
 	return sodym;

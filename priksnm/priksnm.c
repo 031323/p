@@ -3,6 +3,7 @@
 #include "dvyastktntrm.h"
 
 #include <stdio.h>
+#include <stdatomic.h>
 
 #define Y(a, b) (nvm(&s, a, b, 0))
 #define M(a) murdgrhnm(&s, a)
@@ -56,6 +57,8 @@ void dvyastktntrpriksnm()
 
 int main()
 {
-	dvyastktntrpriksnm();
+	printf("%d\n", sizeof(yugm));
+	printf("%d\n", ATOMIC_INT_LOCK_FREE);
+	//dvyastktntrpriksnm();
 	return 0;
 }
