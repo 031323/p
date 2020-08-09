@@ -22,9 +22,9 @@ typedef yugsnkya yugm;
 #define SVH 1 // स्वः
 #define SVYH 2 // स॒व्यः
 #define DKSINH 3 // दक्षि॑णः
-#define STANI 4 // स्था॒नी
-#define DRUVH 5 // ध्रु॒वः
-#define ADESH 6 // आ॒दे॒शः
+#define DRUVH 4 // ध्रु॒वः
+#define ADESH 5 // आ॒दे॒शः
+#define STANI 6 // स्था॒नी
 #define YNTA 7 // य॒न्ता
 #define VIVICIH 8 // विवि॑चिः
 
