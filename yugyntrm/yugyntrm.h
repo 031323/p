@@ -6,29 +6,30 @@
 #define YUGYNTRM_H
 
 typedef char dvym;
-#define ST 1
-#define AST 0
+static const dvym ST = 1;
+static const dvym AST = 0;
 
-#ifndef yugsnkya
-#define yugsnkya uint32_t
-#endif
+typedef uint32_t yugsnkya;
 
-#ifndef VRDNM
-#define VRDNM 2
-#endif
+static const yugsnkya VRDNM = 2;
 
 typedef yugsnkya yugm;
 
-#define SVH 1 // स्वः
-#define SVYH 2 // स॒व्यः
-#define DKSINH 3 // दक्षि॑णः
-#define DRUVH 4 // ध्रु॒वः
-#define ADESH 5 // आ॒दे॒शः
-#define STANI 6 // स्था॒नी
-#define YNTA 7 // य॒न्ता
-#define VIVICIH 8 // विवि॑चिः
+static const yugm SVH = 1; // स्वः
+static const yugm SVYH = 2; // स॒व्यः
+static const yugm DKSINH = 3; // दक्षि॑णः
+static const yugm DRUVH = 4; // ध्रु॒वः
+static const yugm ADESH = 5; // आ॒दे॒शः
+static const yugm STANI = 6; // स्था॒नी
+static const yugm YNTA = 7; // य॒न्ता
+static const yugm VIVICIH = 8; // विवि॑चिः
 
-typedef enum { PRAKRTM, YOGH, DISTRUPM, ATIDESH } yugdrm;
+typedef yugm yugdrm;
+
+static const yugdrm PRAKRTM = (yugdrm) (2ull^32ull - 1ull);
+static const yugdrm YOGH = PRAKRTM - 1;
+static const yugdrm DISTRUPM = YOGH - 1;
+static const yugdrm ATIDESH = DISTRUPM - 1;
 
 typedef struct
 {
